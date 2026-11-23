@@ -4,6 +4,8 @@ Skill para o [Claude Code](https://claude.com/claude-code) que faz a IA escrever
 
 Ela vem com um subagente, o `revisor-codigo-limpo`, que lê cada mudança com o contexto limpo, como alguém que nunca viu o projeto, e aponta onde a leitura trava.
 
+A skill só age quando você a chama com `/gh-codigo-limpo`. Fora disso, o Claude Code trabalha normalmente e não aplica o fluxo dela.
+
 ## O que tem aqui
 
 ```
@@ -20,7 +22,7 @@ A skill tem dois modos. No **modo implementação**, ela aplica as regras enquan
 
 ```mermaid
 flowchart TD
-    inicio(["Você faz um pedido no Claude Code"]) --> tipo{"Que tipo de pedido?"}
+    inicio(["Você digita /gh-codigo-limpo e o pedido"]) --> tipo{"Que tipo de pedido?"}
 
     tipo -->|"Criar ou alterar código"| i1
     tipo -->|"Revisar código que já existe"| r1
@@ -78,15 +80,27 @@ Abra uma nova sessão do Claude Code depois de copiar.
 
 ## Como usar
 
-Não precisa chamar nada. A skill entra sozinha sempre que o Claude Code for escrever ou alterar código.
+Digite `/gh-codigo-limpo` seguido do que você quer. O texto depois da barra decide o modo.
 
-Para revisar código que já existe, peça com suas palavras, por exemplo:
+**Implementar ou alterar código**
 
-- "revisa o arquivo `src/pedidos.ts`"
-- "passa a skill de código limpo nesse módulo"
-- "limpa essa função sem mudar o comportamento"
+```
+/gh-codigo-limpo cria um endpoint que lista os pedidos pagos do cliente
+/gh-codigo-limpo corrige o cálculo de frete em src/frete.ts
+```
 
-O relatório vem numerado. Responda com os números que quer aplicar, "todos" ou "nenhum".
+**Revisar código que já existe**
+
+```
+/gh-codigo-limpo revisa src/pedidos.ts
+/gh-codigo-limpo limpa a pasta src/pagamentos sem mudar o comportamento
+```
+
+O relatório da revisão vem numerado. Responda com os números que quer aplicar, "todos" ou "nenhum".
+
+Se você digitar só `/gh-codigo-limpo`, sem nada depois, ela pergunta o que fazer antes de mexer em qualquer arquivo.
+
+A skill vale só para o pedido feito junto com a barra (e para as respostas que fazem parte dele, como a aprovação do relatório). Os pedidos seguintes que vierem sem `/gh-codigo-limpo` são atendidos normalmente, sem o fluxo da skill.
 
 ## Princípios que guiam a skill
 

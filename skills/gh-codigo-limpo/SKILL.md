@@ -1,6 +1,8 @@
 ---
 name: gh-codigo-limpo
-description: Escreve e revisa código para ser fácil de ler por humanos, aplicando Clean Code (nomes que revelam a intenção, variáveis explicativas, uma ideia por linha, retorno antecipado, funções pequenas) com SOLID, DRY, KISS e YAGNI na medida certa. Use esta skill SEMPRE que for implementar, alterar ou gerar código em qualquer linguagem, mesmo que o usuário não peça "código limpo", e também quando ele pedir para revisar, limpar, refatorar, melhorar a legibilidade, "passar a skill" ou "aplicar clean code" em código que já existe. Na implementação, aplica as regras enquanto escreve. Na revisão de código existente, mostra o que achou e espera aprovação antes de alterar qualquer coisa.
+description: Escreve ou revisa código para ser fácil de ler por humanos, aplicando Clean Code (nomes que revelam a intenção, variáveis explicativas, uma ideia por linha, retorno antecipado, funções pequenas) com SOLID, DRY, KISS e YAGNI na medida certa. Só roda quando o usuário chama /gh-codigo-limpo. Na implementação, aplica as regras enquanto escreve. Na revisão de código existente, mostra o que achou e espera aprovação antes de alterar qualquer coisa.
+disable-model-invocation: true
+argument-hint: "[tarefa a implementar, ou arquivo/pasta para revisar]"
 ---
 
 # Código Limpo
@@ -8,6 +10,16 @@ description: Escreve e revisa código para ser fácil de ler por humanos, aplica
 Quem usa esta skill lê todo o código que a IA gera e precisa entendê-lo rápido. O objetivo é um só: uma pessoa que não conhece o código consegue lê-lo de cima para baixo, sem voltar, e entender o que ele faz e por quê.
 
 Tudo abaixo serve a esse objetivo. Quando uma regra deixar o código mais difícil de ler num caso concreto, a regra perde.
+
+## Quando esta skill vale
+
+O usuário chamou esta skill com `/gh-codigo-limpo`. O pedido dele é:
+
+> $ARGUMENTS
+
+- **Vale para este pedido**, incluindo as respostas do usuário que fazem parte dele (por exemplo, os números aprovados no relatório de revisão).
+- **Não vale para os pedidos seguintes** que vierem sem `/gh-codigo-limpo`. Neles, trabalhe normalmente, sem aplicar este fluxo nem chamar o `revisor-codigo-limpo`.
+- **Se o pedido acima estiver vazio**, pergunte em uma linha o que fazer (implementar algo ou revisar qual arquivo ou pasta) e não altere nada até a resposta.
 
 ## Qual modo usar
 
