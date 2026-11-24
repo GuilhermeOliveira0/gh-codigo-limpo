@@ -79,7 +79,7 @@ Quem escreveu o código não consegue julgar se ele está claro para quem nunca 
 
 **Quando chamar.** Sempre que você escrever ou alterar código, seja uma linha ou vários arquivos. Mudança pequena segue o mesmo fluxo. Pule só quando o usuário pedir para pular.
 
-**O que passar.** Os arquivos e os trechos alterados (com números de linha) e uma frase com o objetivo da tarefa. Não explique as suas decisões nem o que cada nome significa: o valor do revisor é ler sem esse contexto.
+**O que passar.** Os arquivos e os trechos alterados (com números de linha), uma frase com o objetivo da tarefa e o caminho da pasta desta skill, exatamente como está aqui: `${CLAUDE_SKILL_DIR}`. O revisor lê as regras direto desse caminho; sem ele, pode não achar a skill quando ela foi instalada por link. Não explique as suas decisões nem o que cada nome significa: o valor do revisor é ler sem esse contexto.
 
 **Espere a resposta** antes de entregar. Não relate o resultado do revisor antes de ele terminar.
 

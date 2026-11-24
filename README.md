@@ -86,6 +86,21 @@ New-Item -ItemType SymbolicLink -Path "$HOME\.claude\agents\revisor-codigo-limpo
 
 O link aponta para a pasta clonada, então a skill instalada é a da branch que estiver ativa nela. Se você trocar de branch no clone, a skill muda junto.
 
+**Permissão para o revisor ler as regras.** O revisor lê o `SKILL.md` e o `principios.md` direto da pasta da skill, que fica fora do projeto, e o Claude Code pede permissão para qualquer leitura fora do projeto. Para não ter de aprovar isso a cada revisão, libere a leitura dessa pasta em `~/.claude/settings.json`. Com a skill instalada por link, a regra precisa cobrir os dois caminhos, o do link e o do clone; só um deles não basta.
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Read(~/.claude/skills/gh-codigo-limpo/**)",
+      "Read(~/gh-codigo-limpo/skills/gh-codigo-limpo/**)"
+    ]
+  }
+}
+```
+
+Troque o segundo caminho se você clonou o repositório em outro lugar. Se instalou por cópia, a primeira regra basta. Sem a permissão, o revisor avisa que não conseguiu ler as regras e revisa só com as instruções do próprio arquivo.
+
 Abra uma nova sessão do Claude Code depois de instalar.
 
 ## Como usar
