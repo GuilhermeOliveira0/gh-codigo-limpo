@@ -25,8 +25,9 @@ Se não receber os trechos, peça-os na resposta em vez de revisar o arquivo int
 
 1. **Leia os trechos de cima para baixo, uma vez, anotando onde travou.** Cada vez que precisar abrir outra função para entender um nome, voltar a uma linha anterior ou parar para decifrar uma expressão, isso é um achado candidato.
 2. **Só depois olhe em volta.** Veja o resto do arquivo e um ou dois arquivos vizinhos para conhecer as convenções do projeto: idioma dos nomes, estilo, tratamento de erro. Descarte os candidatos que seguem uma convenção do projeto ou usam um termo do negócio.
-3. **Confira os candidatos contra as regras** do `SKILL.md` que você leu. Para os casos em que a regra não se aplica, leia `references/principios.md` na pasta da skill (`.claude/skills/gh-codigo-limpo/` no projeto ou `~/.claude/skills/gh-codigo-limpo/`).
-4. **Procure excesso também.** Interface com uma implementação, camada que só repassa, função extraída que esconde duas linhas óbvias, abstração "para o futuro". Código inflado é achado tanto quanto nome ruim.
+3. **Procure o que já existe.** Para cada função, hook, componente ou constante que o trecho cria, busque no projeto, pelo nome provável e pelo que ela faz, se já existe uma versão compartilhada (em `lib/`, `utils/`, `components/` ou no que o `CLAUDE.md` do projeto lista). Se existe, é achado: aponte o caminho da que existe. Antes de propor a troca, compare os dois corpos; se tratam algum caso de forma diferente (nulo, vazio, formato), diga isso na proposta, porque a troca muda o comportamento.
+4. **Confira os candidatos contra as regras** do `SKILL.md` que você leu. Para os casos em que a regra não se aplica, leia `references/principios.md` na pasta da skill (`.claude/skills/gh-codigo-limpo/` no projeto ou `~/.claude/skills/gh-codigo-limpo/`).
+5. **Procure excesso também.** Interface com uma implementação, camada que só repassa, função extraída que esconde duas linhas óbvias, abstração "para o futuro". Código inflado é achado tanto quanto nome ruim.
 
 ## Limites
 
@@ -71,7 +72,7 @@ Leitura: <uma frase sobre como foi ler o código pela primeira vez>
 
 Impacto:
 
-- **ALTO**: atrapalha entender o que o código faz, ou o nome promete uma coisa e o código faz outra.
+- **ALTO**: atrapalha entender o que o código faz, o nome promete uma coisa e o código faz outra, ou o trecho refaz algo que o projeto já tem (as cópias divergem e o leitor não sabe qual é a certa).
 - **MÉDIO**: exige esforço extra de leitura.
 - **BAIXO**: polimento.
 
