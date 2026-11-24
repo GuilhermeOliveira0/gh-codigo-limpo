@@ -14,7 +14,7 @@ Cada seção tem a regra, um exemplo de antes e depois e os casos em que ela **n
 8. Sem efeitos colaterais escondidos
 9. Erros explícitos
 10. Comentários explicam o porquê
-11. DRY e a regra de três
+11. DRY: o que já existe e a regra de três
 12. KISS e YAGNI
 13. SOLID na medida
 14. Baixo acoplamento, alta coesão
@@ -316,12 +316,32 @@ Antes de escrever um comentário para explicar um trecho confuso, tente renomear
 
 - Não apague comentários de licença, anotações usadas por ferramentas (`@param`, `# type:`, `// eslint-disable`, `TODO` com dono) nem um comentário de "porquê" só por estar longo.
 
-## 11. DRY e a regra de três
+## 11. DRY: o que já existe e a regra de três
 
 DRY é sobre **conhecimento**, não sobre texto. Duas funções com o mesmo código representam a mesma regra? Se a regra mudar, as duas mudam juntas?
 
 - **Sim** (a mesma regra de cálculo de frete em dois lugares): unifique.
 - **Não** (validação de cadastro de cliente e de fornecedor que hoje coincidem): deixe separadas. Juntar acopla coisas que vão evoluir de formas diferentes, e a função única acaba cheia de `if (tipo === ...)`.
+
+**Primeiro, procure o que já existe.** A regra de três vale para a duplicação que você está vendo nascer. Se o projeto já tem um helper, hook ou componente que faz o que você precisa, escrever outro já é a duplicação: use o que existe.
+
+```ts
+// Antes: o componente novo traz a própria versão
+function iniciais(nome: string) {
+  return nome.split(" ").map(parte => parte[0]).join("").toUpperCase();
+}
+
+// Depois: usa a que o projeto já exporta
+import { iniciais } from "@/lib/formatadores";
+```
+
+Cada cópia nova sai um pouco diferente (uma aceita `null`, outra não), e o leitor deixa de saber qual é a certa. Para achar a que existe, busque pelo nome provável (nos dois idiomas, se o projeto mistura) e pelo que a função faz, e olhe `lib/`, `utils/`, `components/` e o que o `CLAUDE.md` do projeto lista.
+
+**Quando não reaproveitar**
+
+- Mesmo nome não é mesma regra. Dois `formatarData` com formatos diferentes de propósito ficam separados; confira o corpo, não só o nome.
+- Se a versão que existe não atende o caso e adaptá-la mudaria a assinatura dela, isso é mudança de contrato: peça aprovação em vez de criar outra cópia em silêncio.
+- Na revisão, trocar uma cópia local pela compartilhada só preserva o comportamento se as duas fazem o mesmo. Compare como cada uma trata nulo, vazio e formato antes de propor, e marque o risco.
 
 Regra de três: na primeira vez, escreva. Na segunda, tolere a duplicação. Na terceira, extraia. Com três casos reais dá para ver qual é a abstração correta.
 

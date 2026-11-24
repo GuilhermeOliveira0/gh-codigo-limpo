@@ -37,7 +37,7 @@ As regras entram em conflito com frequência. Resolva nesta ordem:
 2. **Convenções do projeto.** Idioma dos nomes, estilo, padrões de pastas e de tratamento de erro que já existem. Consistência também é legibilidade, e um arquivo "limpo" num estilo diferente do resto do projeto atrapalha.
 3. **Legibilidade.** As regras da seção seguinte.
 4. **Simplicidade (KISS, YAGNI).** A solução mais simples que resolve o problema de hoje.
-5. **DRY.** Só extraia duplicação na terceira ocorrência, ou quando as cópias representam a mesma regra de negócio. Duas cópias parecidas por coincidência ficam separadas.
+5. **DRY.** Só extraia duplicação na terceira ocorrência, ou quando as cópias representam a mesma regra de negócio. Duas cópias parecidas por coincidência ficam separadas. Reaproveitar não espera a terceira ocorrência: se o projeto já tem um helper, hook ou componente que faz a mesma coisa, use o que existe em vez de escrever outro.
 6. **SOLID.** Só quando resolve um problema que existe agora. Uma interface com uma única implementação, uma factory para um único tipo ou uma camada que só repassa chamadas são abstrações que custam leitura e não entregam nada.
 
 O erro mais comum de uma IA aplicando "boas práticas" é inflar o código: mais arquivos, mais camadas, mais indireção. Se a versão nova tem mais conceitos para o leitor guardar na cabeça do que a antiga, ela piorou.
@@ -66,11 +66,12 @@ Resumo de cada uma. Detalhes, exemplos de antes e depois e os casos em que a reg
 ## Modo implementação
 
 1. **Olhe em volta antes de escrever.** Veja como o projeto nomeia as coisas (português ou inglês, camelCase ou snake_case), como trata erros e como organiza arquivos. Siga o que já existe e não misture idiomas nos nomes.
-2. **Escreva aplicando as regras.** O código já nasce limpo; não entregue uma primeira versão para limpar depois.
-3. **Fique no escopo.** Altere só o que a tarefa pede. Limpar o código vizinho gera um diff grande, que esconde a mudança real e dificulta a revisão. Se viu algo que vale melhorar fora do escopo, liste no final em "Oportunidades que vi e não mexi", com no máximo 5 itens.
-4. **Rode o que o projeto tem.** Formatador, linter e testes, se existirem. Formatação é trabalho da ferramenta (Prettier, ESLint, PHP-CS-Fixer, Black, Ruff), então não reformate à mão.
-5. **Chame o revisor**, em toda mudança de código, pequena ou grande (veja a seção seguinte).
-6. **Passe o checklist final** antes de entregar.
+2. **Procure se já existe antes de criar.** Antes de escrever uma função, hook, componente ou constante, busque no projeto pelo nome provável e pelo que ela faz: pastas como `lib/`, `utils/` e `components/`, e o que o `CLAUDE.md` do projeto lista. Se já existe, use. Se há várias versões, use a do módulo compartilhado e cite as outras em "Oportunidades que vi e não mexi". Se a que existe não atende o caso, não crie uma segunda versão em silêncio: diga na entrega por que ela não serviu.
+3. **Escreva aplicando as regras.** O código já nasce limpo; não entregue uma primeira versão para limpar depois.
+4. **Fique no escopo.** Altere só o que a tarefa pede. Limpar o código vizinho gera um diff grande, que esconde a mudança real e dificulta a revisão. Se viu algo que vale melhorar fora do escopo, liste no final em "Oportunidades que vi e não mexi", com no máximo 5 itens.
+5. **Rode o que o projeto tem.** Formatador, linter e testes, se existirem. Formatação é trabalho da ferramenta (Prettier, ESLint, PHP-CS-Fixer, Black, Ruff), então não reformate à mão.
+6. **Chame o revisor**, em toda mudança de código, pequena ou grande (veja a seção seguinte).
+7. **Passe o checklist final** antes de entregar.
 
 ## Revisor independente
 
@@ -131,7 +132,7 @@ Aplico todos, só alguns (diga os números) ou nenhum?
 
 **Impacto do achado**
 
-- **ALTO**: atrapalha entender o que o código faz, ou esconde um bug provável (efeito colateral escondido, `catch` vazio, função que faz cinco coisas).
+- **ALTO**: atrapalha entender o que o código faz, esconde um bug provável (efeito colateral escondido, `catch` vazio, função que faz cinco coisas) ou refaz algo que o projeto já tem num módulo compartilhado (as cópias divergem e o leitor não sabe qual é a certa).
 - **MÉDIO**: exige esforço extra de leitura (nome genérico, `if` aninhado em três níveis, número mágico).
 - **BAIXO**: polimento (comentário redundante, variável explicativa que ajudaria um pouco).
 
@@ -160,6 +161,7 @@ Antes de entregar qualquer código, nos dois modos:
 - Dá para ler de cima para baixo sem voltar?
 - O comportamento é o mesmo de antes, fora o que a tarefa pediu para mudar?
 - Os nomes novos estão no mesmo idioma e estilo do resto do arquivo?
+- Usei o que o projeto já tem, em vez de criar outra versão da mesma coisa?
 - O diff contém só o que foi pedido ou aprovado?
 - A versão nova tem menos coisas para o leitor guardar na cabeça, e não mais?
 - Tudo o que você vai afirmar na entrega foi de fato feito ou verificado nesta sessão?
